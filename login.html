@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>T-Massage Login</title>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-yellow-100 to-white min-h-screen flex items-center justify-center">
+  <div class="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md border border-yellow-300">
+    <h2 class="text-2xl font-bold text-center mb-6 text-yellow-700">เข้าสู่ระบบ T-Massage</h2>
+    <input id="email" type="email" placeholder="อีเมล" class="w-full mb-4 p-2 border rounded" />
+    <input id="password" type="password" placeholder="รหัสผ่าน" class="w-full mb-4 p-2 border rounded" />
+    <button onclick="login()" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 rounded">เข้าสู่ระบบ</button>
+    <p id="message" class="text-red-600 text-sm text-center mt-4"></p>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDhoCwRUpEVWIY99HH4en-DxsaN0i_5jTg",
+      authDomain: "t-massage-admin-demo.firebaseapp.com",
+      projectId: "t-massage-admin-demo",
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(() => {
+          window.location.href = "dashboard.html";
+        })
+        .catch(error => {
+          document.getElementById("message").innerText = error.message;
+        });
+    }
+  </script>
+</body>
+</html>

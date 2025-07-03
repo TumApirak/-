@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>T-Massage Dashboard</title>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-yellow-50 to-white min-h-screen p-6">
+  <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-6 border border-yellow-300">
+    <h1 class="text-3xl font-bold text-yellow-700 mb-4 text-center">แดชบอร์ด T-Massage</h1>
+    <div id="user-info" class="text-center text-gray-700 mb-6">
+      <p>กำลังโหลดข้อมูลผู้ใช้...</p>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <a href="booking.html" class="bg-yellow-400 hover:bg-yellow-500 text-white py-3 px-4 rounded-xl shadow text-center font-bold">จองคิวหมอนวด</a>
+      <a href="earnings.html" class="bg-yellow-400 hover:bg-yellow-500 text-white py-3 px-4 rounded-xl shadow text-center font-bold">รายได้ของหมอนวด</a>
+      <a href="admin-panel.html" class="bg-yellow-400 hover:bg-yellow-500 text-white py-3 px-4 rounded-xl shadow text-center font-bold">จัดการหลังบ้าน</a>
+      <a href="profile.html" class="bg-yellow-400 hover:bg-yellow-500 text-white py-3 px-4 rounded-xl shadow text-center font-bold">โปรไฟล์ผู้ใช้</a>
+    </div>
+    <div class="mt-6 text-center">
+      <button onclick="logout()" class="text-red-500 underline">ออกจากระบบ</button>
+    </div>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDhoCwRUpEVWIY99HH4en-DxsaN0i_5jTg",
+      authDomain: "t-massage-admin-demo.firebaseapp.com",
+      projectId: "t-massage-admin-demo",
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    firebase.auth().onAuthStateChanged(user => {
+      const userInfo = document.getElementById("user-info");
+      if (user) {
+        userInfo.innerHTML = `<p><strong>ชื่อผู้ใช้:</strong> ${user.email}</p>`;
+      } else {
+        userInfo.innerHTML = "<p>กรุณาเข้าสู่ระบบใหม่อีกครั้ง</p>";
+        setTimeout(() => window.location.href = "login.html", 2000);
+      }
+    });
+
+    function logout() {
+      firebase.auth().signOut().then(() => {
+        window.location.href = "login.html";
+      });
+    }
+  </script>
+</body>
+</html>
